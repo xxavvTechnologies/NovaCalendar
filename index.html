@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFQEFH4RE0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YFQEFH4RE0'); // Replace with your GA4 tracking ID
+    </script>
+    
+    <!-- SEO Meta Tags -->
+    <title>Nova Calendar - Modern Calendar App for Seamless Scheduling</title>
+    <meta name="description" content="Streamline your scheduling with Nova Calendar. Features include multiple views, smart notifications, recurring events, and dark mode. Your new favorite calendar app.">
+    <meta name="keywords" content="calendar app, scheduling, event management, time management, calendar views, reminders">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nova Calendar - Modern Calendar App">
+    <meta property="og:description" content="The most intuitive calendar app for modern scheduling needs.">
+    <meta property="og:image" content="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png">
+    <meta property="og:url" content="https://calendar.nova.xxavvgroup.com">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nova Calendar">
+    <meta name="twitter:description" content="Modern calendar app for seamless scheduling">
+    <meta name="twitter:image" content="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://d2zcpib8duehag.cloudfront.net/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://d2zcpib8duehag.cloudfront.net/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://d2zcpib8duehag.cloudfront.net/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preload Important Assets -->
+    <link rel="preload" href="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png" as="image">
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="app.js" as="script">
+    
+    <!-- Existing stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-mode">
+    <!-- Add loading screen -->
+    <div class="loading-screen" id="loading-screen">
+        <img src="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png" alt="Nova Calendar Logo">
+        <div class="loading-bar"></div>
+    </div>
+
+    <!-- Wrap existing content -->
+    <div class="app-content" id="app-content">
+        <div class="app-container">
+            <div id="welcome-banner" class="welcome-banner" style="grid-column: 1 / -1;">
+                <p>
+                    👋 Welcome to Nova Calendar! Check out our <a href="updated.html">latest features</a> to see what you can do.
+                </p>
+                <button class="dismiss-btn" id="dismiss-welcome">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar">
+                <div class="mini-calendar" id="mini-calendar"></div>
+                <div class="search-box">
+                    <input type="text" id="search-events" placeholder="Search events...">
+                    <i class="fa-solid fa-search search-icon"></i>
+                </div>
+                <div class="calendar-lists">
+                    <h3>My Calendars</h3>
+                    <div class="calendar-list" id="calendar-list">
+                        <div class="calendar-item">
+                            <input type="checkbox" id="cal-1" checked>
+                            <label for="cal-1" style="--cal-color: #5b5ef5">Default</label>
+                        </div>
+                        <button id="add-calendar" class="subtle-btn">
+                            <i class="fa-solid fa-plus"></i> Add Calendar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <header class="app-header">
+                    <div class="logo">
+                        <img src="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png" alt="Nova Calendar Logo">
+                        <h1 class="brand-title">Nova Calendar</h1>
+                    </div>
+                    <nav class="view-controls glass-effect">
+                        <button class="view-btn" data-view="day">Day</button>
+                        <button class="view-btn" data-view="week">Week</button>
+                        <button class="view-btn active" data-view="month">Month</button>
+                    </nav>
+                    <div class="top-controls glass-effect">
+                        <button id="today-btn">Today</button>
+                        <div class="nav-arrows">
+                            <button id="prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button id="next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                        <span id="current-date"></span>
+                        <button id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                        <button id="add-event"><i class="fa-solid fa-plus"></i></button>
+                        <div class="view-options">
+                            <button id="search-btn"><i class="fa-solid fa-search"></i></button>
+                            <button id="settings-btn"><i class="fa-solid fa-gear"></i></button>
+                        </div>
+                    </div>
+                </header>
+                
+                <main id="calendar-container"></main>
+            </div>
+
+            <!-- Simplified Event Modal -->
+            <div id="event-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Event</h2>
+                        <button class="close-btn"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <form id="event-form">
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-heading"></i>
+                                <input type="text" id="event-title" placeholder="Event title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-with-icon">
+                                <i class="fa-regular fa-clock"></i>
+                                <input type="datetime-local" id="event-start" required>
+                            </div>
+                            <div class="input-with-icon">
+                                <i class="fa-regular fa-clock"></i>
+                                <input type="datetime-local" id="event-end" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-repeat"></i>
+                                <select id="event-repeat">
+                                    <option value="none">Does not repeat</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-bell"></i>
+                                <select id="event-reminder">
+                                    <option value="none">No reminder</option>
+                                    <option value="5">5 minutes before</option>
+                                    <option value="15">15 minutes before</option>
+                                    <option value="30">30 minutes before</option>
+                                    <option value="60">1 hour before</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-align-left"></i>
+                                <textarea id="event-description" placeholder="Add description" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-palette"></i>
+                                <select id="event-color">
+                                    <option value="#5b5ef5">Blue</option>
+                                    <option value="#f55b5b">Red</option>
+                                    <option value="#5bf55b">Green</option>
+                                    <option value="#f5f55b">Yellow</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-buttons">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="primary-btn">Save Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notifications Center -->
+            <div class="notifications-center" id="notifications-center"></div>
+        </div>
+    </div>
+    
+    <!-- Add before other scripts -->
+    <script>
+        // Handle loading screen
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const appContent = document.getElementById('app-content');
+            
+            // Show loading screen for 2 seconds
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                appContent.classList.add('loaded');
+                
+                // Remove loading screen from DOM after fade out
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+    </script>
+    <script>
+        // Handle welcome banner
+        const welcomeBanner = document.getElementById('welcome-banner');
+        const dismissBtn = document.getElementById('dismiss-welcome');
+
+        // Check if user has previously dismissed the banner
+        if (localStorage.getItem('bannerDismissed1.0.0')) {
+            welcomeBanner.style.display = 'none';
+        }
+
+        // Handle dismiss button click
+        dismissBtn.addEventListener('click', () => {
+            welcomeBanner.style.opacity = '0';
+            localStorage.setItem('bannerDismissed1.0.0', 'true');
+            setTimeout(() => {
+                welcomeBanner.style.display = 'none';
+            }, 300);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.12/draggable.bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
