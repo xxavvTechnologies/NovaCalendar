@@ -14,26 +14,9 @@ A modern, intuitive calendar application built with vanilla JavaScript and elega
 - Search functionality
 - Responsive design
 
-## Getting Started
-
-1. Clone the repository
-2. Open index.html in a modern browser
-3. Start managing your schedule!
-
 ## Browser Support
 
 - Chrome (latest)
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
-
-## License
-
-MIT License - See LICENSE file
-
-## Development
-
-Built with:
-- Vanilla JavaScript
-- CSS3 with modern features
-- HTML5
