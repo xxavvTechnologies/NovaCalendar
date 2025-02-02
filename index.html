@@ -46,8 +46,52 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Add analytics script before app.js -->
+    <script src="analytics.js"></script>
 </head>
 <body class="light-mode">
+    <!-- Add cookie consent banner at the top of body -->
+    <div id="cookie-consent" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your calendar experience and analyze our traffic. 
+               By clicking "Accept", you consent to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="cookie-accept" class="cookie-btn accept">Accept</button>
+                <button id="cookie-settings" class="cookie-btn settings">Cookie Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add cookie settings modal -->
+    <div id="cookie-settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cookie Settings</h2>
+                <button class="close-btn"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="cookie-preferences">
+                <div class="cookie-option">
+                    <label>
+                        <input type="checkbox" id="essential-cookies" checked disabled>
+                        Essential Cookies (Required)
+                    </label>
+                    <p>These cookies are necessary for the website to function properly.</p>
+                </div>
+                <div class="cookie-option">
+                    <label>
+                        <input type="checkbox" id="analytics-cookies">
+                        Analytics Cookies
+                    </label>
+                    <p>Help us improve by tracking how you use the calendar.</p>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="save-cookie-settings" class="primary-btn">Save Preferences</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Add loading screen -->
     <div class="loading-screen" id="loading-screen">
         <img src="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png" alt="Nova Calendar Logo">
@@ -231,6 +275,96 @@
             setTimeout(() => {
                 welcomeBanner.style.display = 'none';
             }, 300);
+        });
+    </script>
+    <script>
+        class CookieConsent {
+            constructor() {
+                this.banner = document.getElementById('cookie-consent');
+                this.modal = document.getElementById('cookie-settings-modal');
+                this.preferences = this.loadPreferences();
+                this.initializeListeners();
+                this.checkConsent();
+            }
+
+            loadPreferences() {
+                return JSON.parse(localStorage.getItem('cookiePreferences')) || {
+                    essential: true,
+                    analytics: false
+                };
+            }
+
+            savePreferences(preferences) {
+                localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+                this.preferences = preferences;
+                this.applyPreferences();
+            }
+
+            applyPreferences() {
+                if (this.preferences.analytics) {
+                    gtag('consent', 'update', {
+                        'analytics_storage': 'granted'
+                    });
+                } else {
+                    gtag('consent', 'update', {
+                        'analytics_storage': 'denied'
+                    });
+                }
+            }
+
+            checkConsent() {
+                if (!localStorage.getItem('cookiePreferences')) {
+                    this.banner.style.display = 'block';
+                } else {
+                    this.applyPreferences();
+                }
+            }
+
+            initializeListeners() {
+                document.getElementById('cookie-accept').addEventListener('click', () => {
+                    this.savePreferences({ essential: true, analytics: true });
+                    this.banner.style.display = 'none';
+                });
+
+                document.getElementById('cookie-settings').addEventListener('click', () => {
+                    this.banner.style.display = 'none';
+                    this.modal.style.display = 'block';
+                    document.getElementById('analytics-cookies').checked = this.preferences.analytics;
+                });
+
+                document.getElementById('save-cookie-settings').addEventListener('click', () => {
+                    const preferences = {
+                        essential: true,
+                        analytics: document.getElementById('analytics-cookies').checked
+                    };
+                    this.savePreferences(preferences);
+                    this.modal.style.display = 'none';
+                    this.banner.style.display = 'none';
+                });
+
+                // Close modal handlers
+                this.modal.querySelector('.close-btn').addEventListener('click', () => {
+                    this.modal.style.display = 'none';
+                });
+
+                // Close on outside click
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) {
+                        this.modal.style.display = 'none';
+                    }
+                });
+
+                // Add settings button to header for later access
+                document.getElementById('settings-btn').addEventListener('click', () => {
+                    this.modal.style.display = 'block';
+                    document.getElementById('analytics-cookies').checked = this.preferences.analytics;
+                });
+            }
+        }
+
+        // Initialize cookie consent
+        document.addEventListener('DOMContentLoaded', () => {
+            window.cookieConsent = new CookieConsent();
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.12/draggable.bundle.js"></script>
