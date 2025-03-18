@@ -16,6 +16,8 @@ class NovaCalendar {
         this.contextMenu = this.createContextMenu();
         this.selectedDate = null;
         this.selectedEvent = null;
+        this.isMobile = window.innerWidth < 768;
+        this.initializeMobileFeatures();
     }
 
     initializeTheme() {
@@ -780,6 +782,71 @@ class NovaCalendar {
         if (new Date(eventData.end) <= new Date(eventData.start)) {
             throw new Error('End time must be after start time');
         }
+    }
+
+    initializeMobileFeatures() {
+        // Sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar'); // Changed from getElementById to querySelector
+        
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar on outside click
+            document.addEventListener('click', (e) => {
+                if (sidebar?.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+        // Bottom navigation
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (bottomNav) {
+            bottomNav.addEventListener('click', (e) => {
+                const navItem = e.target.closest('.bottom-nav-item');
+                if (!navItem) return;
+
+                e.preventDefault();
+                const view = navItem.dataset.view;
+                if (view) {
+                    this.currentView = view;
+                    this.updateActiveView();
+                    this.render();
+                }
+            });
+        }
+
+        // Touch gestures
+        this.initializeTouchGestures();
+    }
+
+    initializeTouchGestures() {
+        let startX, startY;
+        
+        this.container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        this.container.addEventListener('touchmove', (e) => {
+            if (!startX || !startY) return;
+
+            const diffX = e.touches[0].clientX - startX;
+            const diffY = e.touches[0].clientY - startY;
+
+            // If horizontal swipe is greater than vertical and more than 50px
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                e.preventDefault();
+                this.navigate(diffX > 0 ? 'prev' : 'next');
+                startX = null;
+                startY = null;
+            }
+        });
     }
 }
 

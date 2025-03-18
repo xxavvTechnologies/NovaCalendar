@@ -131,6 +131,9 @@
 
             <div class="main-content">
                 <header class="app-header">
+                    <button id="sidebar-toggle" class="icon-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                     <div class="logo">
                         <img src="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png" alt="Nova Calendar Logo">
                         <h1 class="brand-title">Nova Calendar</h1>
@@ -239,6 +242,31 @@
         </div>
     </div>
     
+    <!-- Add bottom navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" data-view="month">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Month</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="week">
+            <i class="fa-solid fa-calendar-week"></i>
+            <span>Week</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="day">
+            <i class="fa-solid fa-calendar-day"></i>
+            <span>Day</span>
+        </a>
+        <a href="#" class="bottom-nav-item" id="more-menu">
+            <i class="fa-solid fa-ellipsis"></i>
+            <span>More</span>
+        </a>
+    </nav>
+
+    <!-- Add floating action button -->
+    <button class="fab" id="add-event">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+
     <!-- Add before other scripts -->
     <script>
         // Handle loading screen

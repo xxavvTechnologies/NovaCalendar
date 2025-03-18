@@ -818,3 +818,134 @@ button:hover {
     opacity: 0.8;
     margin-left: 24px;
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        width: 85%;
+        max-width: 300px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .app-header {
+        padding: 8px;
+        height: 56px;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+    }
+
+    .view-controls {
+        display: none; /* Hidden in favor of bottom nav */
+    }
+
+    .calendar-cell {
+        padding: 4px;
+        min-height: 60px;
+        font-size: 0.9em;
+    }
+
+    .event {
+        padding: 2px 4px;
+        font-size: 0.8em;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 1px solid var(--border-color);
+        z-index: 900;
+    }
+
+    .bottom-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px;
+        color: var(--text-color);
+        text-decoration: none;
+        opacity: 0.7;
+        font-size: 0.8rem;
+    }
+
+    .bottom-nav-item.active {
+        opacity: 1;
+        color: var(--primary-color);
+    }
+
+    .bottom-nav-item i {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+
+    /* Floating action button for adding events */
+    .fab {
+        position: fixed;
+        right: 16px;
+        bottom: 72px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 901;
+    }
+
+    .fab i {
+        font-size: 24px;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+/* Larger screen overrides */
+@media (min-width: 769px) {
+    .bottom-nav,
+    .fab,
+    #sidebar-toggle {
+        display: none;
+    }
+}
