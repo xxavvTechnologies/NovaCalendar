@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Calendar - To-Do Lists</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="todo.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-mode">
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <div class="todo-container">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Calendar
+        </a>
+
+        <header class="todo-header">
+            <h1>To-Do Lists</h1>
+            <button id="add-list" class="primary-btn">
+                <i class="fa-solid fa-plus"></i> New List
+            </button>
+        </header>
+
+        <div class="lists-container" id="lists-container">
+            <!-- Lists will be dynamically added here -->
+        </div>
+
+        <!-- New List Modal -->
+        <div id="list-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>New List</h2>
+                    <button class="close-btn"><i class="fa-solid fa-times"></i></button>
+                </div>
+                <form id="list-form">
+                    <div class="form-group">
+                        <input type="text" id="list-title" placeholder="List Title" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="list-color">
+                            <option value="#5b5ef5">Blue</option>
+                            <option value="#f55b5b">Red</option>
+                            <option value="#5bf55b">Green</option>
+                            <option value="#f5f55b">Yellow</option>
+                        </select>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="primary-btn">Create List</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="todo.js"></script>
+</body>
+</html>

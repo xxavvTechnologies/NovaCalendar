@@ -1,0 +1,233 @@
+.todo-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.lists-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.todo-list {
+    background: var(--glass-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px -10px var(--shadow-color);
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.list-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.list-actions button {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+}
+
+.todo-items {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+    animation: slideIn 0.2s ease-out;
+}
+
+.todo-item:last-child {
+    border-bottom: none;
+}
+
+.todo-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.todo-item.completed .todo-checkbox {
+    background-color: var(--primary-color);
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.todo-text {
+    flex: 1;
+}
+
+.add-todo {
+    display: flex;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.add-todo input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.add-todo button {
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .todo-container {
+        padding: 0 12px;
+        margin: 1rem auto;
+    }
+
+    .lists-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .todo-container {
+        padding: 12px;
+        margin: 0;
+    }
+
+    .todo-header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px 0;
+    }
+
+    .todo-header h1 {
+        font-size: 1.8rem;
+        margin: 0;
+    }
+
+    .todo-header .primary-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .lists-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .todo-list {
+        padding: 1rem;
+    }
+
+    .list-header {
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.8rem;
+    }
+
+    .list-title {
+        font-size: 1.1rem;
+    }
+
+    .todo-item {
+        padding: 12px 0;
+    }
+
+    .todo-checkbox {
+        width: 22px;
+        height: 22px;
+    }
+
+    .add-todo {
+        margin-top: 0.8rem;
+    }
+
+    .add-todo input {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .add-todo button {
+        padding: 10px 20px;
+    }
+
+    /* Modal adjustments for mobile */
+    .modal-content {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        border-radius: 0;
+        height: 100vh;
+    }
+
+    .modal-content .form-group {
+        margin-bottom: 16px;
+    }
+
+    .modal-buttons {
+        position: sticky;
+        bottom: 0;
+        background: var(--glass-bg);
+        padding: 16px 0;
+        margin: 0 -2rem -2rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .modal-buttons button {
+        flex: 1;
+        padding: 12px;
+    }
+
+    /* Safe area insets for notched devices */
+    @supports (padding: env(safe-area-inset-bottom)) {
+        .modal-buttons {
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        }
+
+        .todo-container {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    }
+}

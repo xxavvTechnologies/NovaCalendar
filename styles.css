@@ -29,7 +29,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
@@ -203,7 +203,8 @@ button:hover {
 }
 
 .event:hover {
-    transform: translateX(4px);
+    transform: translateX(4px) scale(1.02);
+    z-index: 2;
 }
 
 .event.dragging {
@@ -231,6 +232,7 @@ button:hover {
     max-width: 500px;
     margin: 40px auto;
     position: relative;  /* For proper stacking context */
+    backdrop-filter: blur(12px);
 }
 
 .modal-content h2 {
@@ -248,7 +250,7 @@ button:hover {
     border-radius: 8px;
     background: var(--background-color);
     color: var(--text-color);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .modal-buttons {
@@ -267,7 +269,7 @@ button:hover {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .form-group label {
@@ -294,6 +296,7 @@ button:hover {
     transform: translateY(-50%);
     color: var(--text-color);
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .input-with-icon input,
@@ -301,6 +304,172 @@ button:hover {
     padding-left: 36px;
     width: 100%;
     height: 40px;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+/* Remove padding-left when no icon */
+input:not(.input-with-icon input),
+select:not(.input-with-icon select) {
+    padding-left: 16px;
+}
+
+input[type="datetime-local"] {
+    min-height: 44px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Enhanced Select Styles */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* File Input Styles */
+input[type="file"] {
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    margin-right: 12px;
+    transition: all 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: var(--primary-color);
+    opacity: 0.9;
+}
+
+/* Enhanced Focus States */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Modal Buttons */
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    justify-content: flex-end;
+}
+
+.modal-buttons button {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.modal-buttons .primary-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.modal-buttons .primary-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.modal-buttons .cancel-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+}
+
+.modal-buttons .cancel-btn:hover {
+    background: var(--hover-color);
+}
+
+/* Mobile Modal Adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        padding: 1.5rem;
+        overflow-y: auto;
+    }
+
+    .modal-buttons {
+        position: sticky;
+        bottom: 0;
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        padding: 16px;
+        margin: 32px -1.5rem -1.5rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .modal-buttons button {
+        flex: 1;
+        padding: 12px;
+    }
+
+    input[type="datetime-local"],
+    select {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+/* Support for safe area insets */
+@supports (padding: env(safe-area-inset-bottom)) {
+    @media (max-width: 768px) {
+        .modal-buttons {
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        }
+    }
+}
+
+/* Dark Mode Adjustments for Form Elements */
+.dark-mode input[type="text"],
+.dark-mode input[type="datetime-local"],
+.dark-mode input[type="file"],
+.dark-mode textarea,
+.dark-mode select {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode input[type="file"]::file-selector-button {
+    background: var(--primary-color);
+    color: white;
 }
 
 .other-month {
@@ -941,6 +1110,118 @@ button:hover {
     }
 }
 
+/* Enhanced Mobile Styles */
+@media (max-width: 768px) {
+    /* Improved touch targets */
+    .calendar-cell {
+        min-height: 80px;
+        padding: 8px;
+    }
+
+    .event {
+        padding: 8px 12px;
+        margin: 4px 0;
+        min-height: 44px;
+    }
+
+    /* Gesture hints */
+    .calendar-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gesture-hint {
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        right: 16px;
+        transform: translateY(-50%);
+        text-align: center;
+        color: var (--text-color);
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    /* Pull to refresh animation */
+    .pull-indicator {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-100%);
+        transition: transform 0.2s;
+    }
+
+    .pull-indicator.active {
+        transform: translateY(0);
+    }
+
+    /* Bottom sheet for event details */
+    .event-sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--background-color);
+        border-radius: 16px 16px 0 0;
+        padding: 20px;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+        z-index: 1000;
+    }
+
+    .event-sheet.active {
+        transform: translateY(0);
+    }
+
+    .sheet-handle {
+        width: 40px;
+        height: 4px;
+        background: var(--border-color);
+        border-radius: 2px;
+        margin: 0 auto 16px;
+    }
+
+    /* Mobile navigation improvements */
+    .bottom-nav {
+        height: 64px;
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .fab {
+        bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.screen-reader-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+[role="button"],
+button {
+    cursor: pointer;
+}
+
+:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 /* Larger screen overrides */
 @media (min-width: 769px) {
     .bottom-nav,
@@ -948,4 +1229,367 @@ button:hover {
     #sidebar-toggle {
         display: none;
     }
+}
+
+/* Event Tags */
+.event-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 8px 0;
+}
+
+.tag {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+}
+
+/* Event Location */
+.event-location {
+    margin: 12px 0;
+}
+
+.event-map {
+    height: 200px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+/* Event Weather */
+.event-weather {
+    background: var(--primary-light);
+    padding: 12px;
+    border-radius: 12px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.weather-details {
+    flex: 1;
+}
+
+.weather-location {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.weather-info {
+    font-size: 0.9em;
+    opacity: 0.8;
+    white-space: pre-line;
+}
+
+/* Event Attachments */
+.event-attachments ul {
+    list-style: none;
+    padding: 0;
+}
+
+.event-attachments li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background: var (--hover-color);
+    margin: 4px 0;
+}
+
+/* Event Attendees */
+.event-attendees ul {
+    list-style: none;
+    padding: 0;
+}
+
+.event-attendees li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+/* Keyboard Shortcuts Help */
+.keyboard-shortcuts {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--glass-bg);
+    padding: 24px;
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    display: none;
+}
+
+.keyboard-shortcuts.show {
+    display: block;
+}
+
+.shortcut-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 16px;
+    margin-top: 16px;
+}
+
+.shortcut-key {
+    background: var(--hover-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* Google Places Autocomplete */
+.pac-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px -4px var(--shadow-color);
+    margin-top: 4px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.pac-item {
+    padding: 8px 12px;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.pac-item:first-child {
+    border-top: none;
+}
+
+.pac-item:hover {
+    background: var(--hover-color);
+}
+
+.pac-item-query {
+    color: var(--text-color);
+    font-size: 0.95em;
+}
+
+.pac-matched {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Google Places Element */
+.location-input-container {
+    position: relative;
+}
+
+.location-input-container gmpx-place-autocomplete {
+    width: 100%;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.location-input-container gmpx-place-autocomplete::part(input) {
+    padding: 12px 12px 12px 36px;
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+}
+
+.location-input-container gmpx-place-autocomplete::part(menu) {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px -4px var(--shadow-color);
+}
+
+.location-input-container gmpx-place-autocomplete::part(suggestion) {
+    padding: 8px 12px;
+    color: var(--text-color);
+}
+
+.location-input-container gmpx-place-autocomplete::part(suggestion):hover,
+.location-input-container gmpx-place-autocomplete::part(suggestion)[highlighted] {
+    background: var(--hover-color);
+}
+
+/* Remove old styles */
+.pac-container,
+.pac-item,
+.pac-item-query,
+.pac-matched {
+    display: none;
+}
+
+/* Location Input Styling */
+.location-input {
+    width: 100%;
+    height: 40px;
+    padding: 12px 12px 12px 36px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.location-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px -4px var(--shadow-color);
+    margin-top: 4px;
+    z-index: 1000;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.location-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--text-color);
+    border-top: 1px solid var (--border-color);
+}
+
+.location-item:first-child {
+    border-top: none;
+}
+
+.location-item:hover {
+    background: var(--hover-color);
+}
+
+/* Remove old Google Places styles */
+.location-input-container gmpx-place-autocomplete,
+.pac-container,
+.pac-item,
+.pac-item-query,
+.pac-matched {
+    display: none;
+}
+
+/* Attribution Notice */
+.osm-attribution {
+    font-size: 0.8em;
+    margin-top: 4px;
+    opacity: 0.7;
+    text-align: right;
+}
+
+.osm-attribution a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.osm-attribution a:hover {
+    text-decoration: underline;
+}
+
+/* Event Details Popup */
+.event-details-popup {
+    display: none;
+    position: fixed;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow: 0 8px 32px -4px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: opacity 0.2s ease-out;
+}
+
+.event-details-popup.active {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 12px 48px -8px var(--shadow-color);
+}
+
+.event-details-content {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Add these styles for the navigation links */
+.nav-links {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    background-color: var(--hover-color);
+}
+
+.nav-link i {
+    opacity: 0.7;
+}
+
+/* Back Button Styles */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+    text-decoration: none;
+    color: var(--text-color);
+    background: var(--glass-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.back-btn i {
+    font-size: 1.1em;
+    transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+    color: var(--primary-color);
+    background: var(--hover-color);
+    box-shadow: 0 4px 12px -2px var(--shadow-color);
+    transform: translateY(-1px);
+}
+
+.back-btn:hover i {
+    transform: translateX(-4px);
+}
+
+.back-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 6px -2px var(--shadow-color);
 }

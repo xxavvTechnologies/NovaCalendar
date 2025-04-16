@@ -1,0 +1,8 @@
+# SPA fallback
+/*    /index.html   200
+
+# Optional: Redirect www to non-www
+https://www.calendar.novasuite.one/*    https://calendar.novasuite.one/:splat    301!
+
+# Optional: Force HTTPS
+http://calendar.novasuite.one/*    https://calendar.novasuite.one/:splat    301!

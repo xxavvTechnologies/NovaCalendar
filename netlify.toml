@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+  command = ""
+
+[dev]
+  framework = "#static"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

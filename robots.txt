@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://calendar.novasuite.one/sitemap.xml

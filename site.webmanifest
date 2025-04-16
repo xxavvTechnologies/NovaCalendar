@@ -1,21 +1,46 @@
 {
-    "name": "Nova Calendar",
-    "short_name": "N-Calendar",
+    "name": "Nova Calendar by xxavvTechnologies",
+    "short_name": "Nova Calendar",
     "description": "Modern Calendar App for Seamless Scheduling",
-    "start_url": "/",
+    "start_url": "https://calendar.novasuite.one/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#2563eb",
+    "id": "nova-calendar-v1",
+    "categories": ["productivity", "business"],
     "icons": [
         {
-            "src": "https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png",
+            "src": "https://calendar.novasuite.one/assets/icons/icon-192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
-            "src": "https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png",
+            "src": "https://calendar.novasuite.one/assets/icons/icon-512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
-    ]
+    ],
+    "screenshots": [
+        {
+            "src": "https://calendar.novasuite.one/assets/screenshots/desktop.png",
+            "sizes": "1280x800",
+            "type": "image/png",
+            "platform": "wide",
+            "label": "Desktop view of Nova Calendar"
+        },
+        {
+            "src": "https://calendar.novasuite.one/assets/screenshots/mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "platform": "narrow",
+            "label": "Mobile view of Nova Calendar"
+        }
+    ],
+    "developer": {
+        "name": "xxavvTechnologies",
+        "url": "https://xxavvgroup.com"
+    }
 }

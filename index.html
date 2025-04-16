@@ -14,22 +14,29 @@
     </script>
     
     <!-- SEO Meta Tags -->
-    <title>Nova Calendar - Modern Calendar App for Seamless Scheduling</title>
-    <meta name="description" content="Streamline your scheduling with Nova Calendar. Features include multiple views, smart notifications, recurring events, and dark mode. Your new favorite calendar app.">
-    <meta name="keywords" content="calendar app, scheduling, event management, time management, calendar views, reminders">
-    
+    <title>Nova Calendar - Modern Scheduling & Event Management | xxavvTechnologies</title>
+    <meta name="description" content="Nova Calendar by xxavvTechnologies - A modern, intuitive calendar application with smart scheduling, recurring events, dark mode, and offline support. Try it free today!">
+    <meta name="keywords" content="calendar app, event management, scheduling software, business calendar, meeting planner, xxavvTechnologies, Nova Suite">
+    <meta name="author" content="xxavvTechnologies">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="canonical" content="https://calendar.novasuite.one">
+
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Nova Calendar - Modern Calendar App">
-    <meta property="og:description" content="The most intuitive calendar app for modern scheduling needs.">
-    <meta property="og:image" content="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png">
-    <meta property="og:url" content="https://calendar.nova.xxavvgroup.com">
+    <meta property="og:site_name" content="Nova Calendar">
+    <meta property="og:title" content="Nova Calendar - Modern Scheduling & Event Management">
+    <meta property="og:description" content="Streamline your scheduling with Nova Calendar. Features include multiple views, smart notifications, recurring events, and dark mode.">
+    <meta property="og:image" content="https://calendar.novasuite.one/assets/images/og-image.png">
+    <meta property="og:url" content="https://calendar.novasuite.one">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Nova Calendar">
-    <meta name="twitter:description" content="Modern calendar app for seamless scheduling">
-    <meta name="twitter:image" content="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png">
+    <meta name="twitter:site" content="@xxavvTech">
+    <meta name="twitter:creator" content="@xxavvTech">
+    <meta name="twitter:title" content="Nova Calendar - Modern Calendar App">
+    <meta name="twitter:description" content="Modern calendar app for seamless scheduling by xxavvTechnologies">
+    <meta name="twitter:image" content="https://calendar.novasuite.one/assets/images/twitter-card.png">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://d2zcpib8duehag.cloudfront.net/Nova%20Calendar%20wo%20Text.png">
@@ -44,11 +51,38 @@
     
     <!-- Existing stylesheets -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Add analytics script before app.js -->
     <script src="analytics.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Nova Calendar",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "xxavvTechnologies",
+            "url": "https://tech.xxavvgroup.com"
+        },
+        "description": "Modern calendar application with smart scheduling, recurring events, and offline support.",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "156"
+        }
+    }
+    </script>
 </head>
 <body class="light-mode">
     <!-- Add cookie consent banner at the top of body -->
@@ -114,6 +148,12 @@
                 <div class="search-box">
                     <input type="text" id="search-events" placeholder="Search events...">
                     <i class="fa-solid fa-search search-icon"></i>
+                </div>
+                <div class="nav-links">
+                    <a href="todo.html" class="nav-link">
+                        <i class="fa-solid fa-list-check"></i>
+                        To-Do Lists
+                    </a>
                 </div>
                 <div class="calendar-lists">
                     <h3>My Calendars</h3>
@@ -217,6 +257,34 @@
                             </div>
                         </div>
 
+                        <!-- Replace location input with container -->
+                        <div class="form-group">
+                            <div class="input-with-icon location-input-container">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-users"></i>
+                                <input type="text" id="event-attendees" placeholder="Add attendees (comma separated)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-tags"></i>
+                                <input type="text" id="event-tags" placeholder="Add tags (comma separated)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-paperclip"></i>
+                                <input type="file" id="event-attachments" multiple>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="input-with-icon">
                                 <i class="fa-solid fa-palette"></i>
@@ -235,6 +303,11 @@
                         </div>
                     </form>
                 </div>
+            </div>
+
+            <!-- Event Details Popup -->
+            <div id="event-details-popup" class="event-details-popup">
+                <div class="event-details-content"></div>
             </div>
 
             <!-- Notifications Center -->
@@ -396,6 +469,8 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.12/draggable.bundle.js"></script>
+    <script src="places.js"></script>
+    <script src="weather.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
