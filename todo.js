@@ -1,13 +1,23 @@
 class TodoManager {
     constructor() {
-        this.lists = this.loadLists();
+        this.lists = [];
+        this.isLoading = true;
         this.initializeUI();
+        this.loadLists().then(() => {
+            this.isLoading = false;
+            this.render();
+        });
         this.attachEventListeners();
-        this.render();
     }
 
-    loadLists() {
-        return JSON.parse(localStorage.getItem('novaTodoLists')) || [];
+    async loadLists() {
+        try {
+            const data = localStorage.getItem('novaTodoLists');
+            this.lists = data ? JSON.parse(data) : [];
+        } catch (error) {
+            console.error('Failed to load lists:', error);
+            this.showError('Failed to load lists. Please try refreshing the page.');
+        }
     }
 
     saveLists() {
@@ -50,20 +60,30 @@ class TodoManager {
 
     handleListSubmit(e) {
         e.preventDefault();
-        const title = document.getElementById('list-title').value;
+        const title = document.getElementById('list-title').value.trim();
         const color = document.getElementById('list-color').value;
         
-        const newList = {
-            id: Date.now(),
-            title,
-            color,
-            items: []
-        };
+        if (!title) {
+            this.showError('Please enter a list title');
+            return;
+        }
+        
+        try {
+            const newList = {
+                id: Date.now(),
+                title,
+                color,
+                items: []
+            };
 
-        this.lists.push(newList);
-        this.saveLists();
-        this.render();
-        this.hideModal();
+            this.lists.push(newList);
+            this.saveLists();
+            this.render();
+            this.hideModal();
+        } catch (error) {
+            console.error('Failed to create list:', error);
+            this.showError('Failed to create list. Please try again.');
+        }
     }
 
     createTodoItem(listId, text) {
@@ -109,7 +129,28 @@ class TodoManager {
         }
     }
 
+    showError(message) {
+        const notification = document.createElement('div');
+        notification.className = 'error-notification';
+        notification.innerHTML = `
+            <i class="fa-solid fa-exclamation-circle"></i>
+            ${message}
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 5000);
+    }
+
     render() {
+        if (this.isLoading) {
+            this.listsContainer.innerHTML = `
+                <div class="loading-indicator">
+                    <div class="loading-spinner"></div>
+                    <p>Loading your lists...</p>
+                </div>
+            `;
+            return;
+        }
+
         this.listsContainer.innerHTML = this.lists.map(list => `
             <div class="todo-list" style="border-top: 4px solid ${list.color}">
                 <div class="list-header">

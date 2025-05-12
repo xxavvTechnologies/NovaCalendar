@@ -231,3 +231,84 @@
         }
     }
 }
+
+/* Loading animations */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease-out;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 20px;
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background: var(--primary-color);
+    animation: loading 1s infinite ease-in-out;
+}
+
+@keyframes loading {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(400%); }
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+    .todo-list {
+        margin: 0.5rem 0;
+        border-radius: 8px;
+    }
+
+    .add-todo {
+        position: sticky;
+        bottom: 0;
+        background: var(--glass-bg);
+        padding: 12px;
+        margin: 0 -1rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .todo-item {
+        padding: 12px 0;
+    }
+
+    .todo-checkbox {
+        width: 24px;
+        height: 24px;
+    }
+
+    .modal-content {
+        margin: 0;
+        height: 100%;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-buttons {
+        margin-top: auto;
+        padding: 16px;
+        background: var(--glass-bg);
+    }
+}

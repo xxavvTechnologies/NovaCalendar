@@ -882,14 +882,20 @@ class NovaCalendar {
     }
 
     validateEventData(eventData) {
+        const errors = [];
+        
         if (!eventData.title?.trim()) {
-            throw new Error('Event title is required');
+            errors.push('Event title is required');
         }
         if (!eventData.start || !eventData.end) {
-            throw new Error('Event start and end times are required');
+            errors.push('Event start and end times are required');
         }
         if (new Date(eventData.end) <= new Date(eventData.start)) {
-            throw new Error('End time must be after start time');
+            errors.push('End time must be after start time');
+        }
+        
+        if (errors.length > 0) {
+            throw new Error(errors.join('\n'));
         }
     }
 
@@ -1122,9 +1128,14 @@ class NovaCalendar {
 
     async getWeatherForecast() {
         const location = window.placesAPI?.lastSelectedPlace;
-        if (!location) return null;
+        if (!location?.lat || !location?.lng) return null;
 
         try {
+            const weatherContainer = document.querySelector('.event-weather');
+            if (weatherContainer) {
+                weatherContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading weather...</div>';
+            }
+
             const forecast = await this.weatherAPI.getForecast(location, this.selectedDate);
             return {
                 ...forecast,
@@ -1132,6 +1143,10 @@ class NovaCalendar {
             };
         } catch (error) {
             console.warn('Weather forecast unavailable:', error);
+            const weatherContainer = document.querySelector('.event-weather');
+            if (weatherContainer) {
+                weatherContainer.innerHTML = '<div class="error"><i class="fas fa-exclamation-circle"></i> Weather data unavailable</div>';
+            }
             return null;
         }
     }
@@ -1251,44 +1266,47 @@ END:VCALENDAR`;
     }
 
     showEventPopup(event, element) {
-        // Parse dates if they're strings (from data-event attribute)
         const eventData = {
             ...event,
             start: new Date(event.start),
             end: new Date(event.end)
         };
 
-        const rect = element.getBoundingClientRect();
         const html = this.renderEventDetails(eventData);
-        
         this.eventPopupContent.innerHTML = html;
         this.eventPopup.style.display = 'block';
-        this.eventPopup.classList.add('active'); // Add active class when showing
+        this.eventPopup.classList.add('active');
 
-        // Position popup
+        // Improved positioning logic
+        const rect = element.getBoundingClientRect();
         const popup = this.eventPopup;
         const viewportHeight = window.innerHeight;
         const viewportWidth = window.innerWidth;
         
-        // Default position to the right of the event
-        let left = rect.right + 10;
-        let top = rect.top;
+        let left = Math.min(
+            rect.right + 10,
+            viewportWidth - popup.offsetWidth - 10
+        );
+        
+        if (left < 10) left = 10;
+        
+        let top = Math.min(
+            rect.top,
+            viewportHeight - popup.offsetHeight - 10
+        );
+        
+        if (top < 10) top = 10;
 
-        // Check if popup would go off screen horizontally
-        if (left + popup.offsetWidth > viewportWidth) {
-            left = rect.left - popup.offsetWidth - 10;
-        }
-
-        // Check if popup would go off screen vertically
-        if (top + popup.offsetHeight > viewportHeight) {
-            top = viewportHeight - popup.offsetHeight - 10;
-        }
-
-        // Ensure popup doesn't go above viewport
-        top = Math.max(10, top);
-
-        this.eventPopup.style.left = `${left}px`;
-        this.eventPopup.style.top = `${top}px`;
+        // Add smooth animation
+        popup.style.transform = 'scale(0.95)';
+        popup.style.opacity = '0';
+        popup.style.left = `${left}px`;
+        popup.style.top = `${top}px`;
+        
+        requestAnimationFrame(() => {
+            popup.style.transform = 'scale(1)';
+            popup.style.opacity = '1';
+        });
     }
 
     hideEventPopup() {
